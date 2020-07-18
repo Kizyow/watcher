@@ -14,7 +14,7 @@ public class Application {
         watcher.registerLogger();
         watcher.registerCommands();
         watcher.cache();
-        watcher.activity("vous surveiller");
+        watcher.activity("vous surveiller !");
         watcher.build();
 
     }
