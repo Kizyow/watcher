@@ -3,7 +3,8 @@ package fr.kizyow.watcher;
 import fr.kizyow.watcher.commands.CommandListener;
 import fr.kizyow.watcher.commands.CommandManager;
 import fr.kizyow.watcher.commands.defaults.*;
-import fr.kizyow.watcher.commands.defaults.mod.CheckCommand;
+import fr.kizyow.watcher.commands.defaults.mod.BanCommand;
+import fr.kizyow.watcher.commands.defaults.mod.KickCommand;
 import fr.kizyow.watcher.listeners.GuildJoinListener;
 import fr.kizyow.watcher.loggers.LoggerListener;
 import fr.kizyow.watcher.loggers.LoggerManager;
@@ -46,8 +47,9 @@ public class Watcher {
         commandManager.registerCommand(new CreditCommand());
         commandManager.registerCommand(new SpecialCharacterCommand());
         commandManager.registerCommand(new ServerCommand());
-        commandManager.registerCommand(new CheckCommand());
         commandManager.registerCommand(new LauCommand());
+        commandManager.registerCommand(new BanCommand());
+        commandManager.registerCommand(new KickCommand());
     }
 
     public void activity(String activity){

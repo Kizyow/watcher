@@ -17,13 +17,11 @@ public class ShutdownCommand extends Command {
         Member member = event.getMember();
         TextChannel textChannel = event.getChannel();
 
-        if(member.getId().equalsIgnoreCase("310000732034301953")){
+        if(member.getId().equalsIgnoreCase("310000732034301953") || member.getId().equalsIgnoreCase("446337116197355520")){
             textChannel.sendMessage("Disabling modules, see you later!").queue();
             member.getJDA().shutdown();
-
         } else {
             textChannel.sendMessage("You're not the owner of the bot!").queue();
-
         }
 
     }

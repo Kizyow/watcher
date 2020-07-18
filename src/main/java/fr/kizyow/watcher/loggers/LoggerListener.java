@@ -32,12 +32,10 @@ public class LoggerListener extends ListenerAdapter {
         if(event.isFromType(ChannelType.PRIVATE)){
             System.out.printf("[PRIVATE] %s: %s\n", event.getAuthor().getName(), event.getMessage().getContentDisplay());
             return;
-
         }
 
         if(loggerManager.isIgnored(event.getTextChannel().getIdLong())){
             return;
-
         }
 
         System.out.printf("[%s][%s] %s: %s\n", event.getGuild().getName(), event.getTextChannel().getName(), event.getMember().getEffectiveName(), event.getMessage().getContentDisplay());
@@ -48,7 +46,6 @@ public class LoggerListener extends ListenerAdapter {
         if(loggerManager.isURL(message.getContentRaw())){
             TextChannel textChannel = event.getGuild().getTextChannelsByName("logs", true).stream().findFirst().orElse(event.getTextChannel());
             //LoggerEmbed.url(message, loggerObject, textChannel);
-
         }
 
         if(message.getContentRaw().startsWith("https://discordapp.com/channels/")){
