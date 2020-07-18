@@ -29,7 +29,6 @@ public class BanCommand extends Command {
 
         Member target = memberList.get(0);
         User user = target.getUser();
-        String id = user.getId();
 
         guild.ban(target, 7).queue();
         createEmbed(target, textChannel);
