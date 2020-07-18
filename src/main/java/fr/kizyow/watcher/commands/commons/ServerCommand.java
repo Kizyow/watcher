@@ -1,4 +1,4 @@
-package fr.kizyow.watcher.commands.defaults;
+package fr.kizyow.watcher.commands.commons;
 
 import fr.kizyow.watcher.commands.Command;
 import fr.kizyow.watcher.utils.TimeUnit;
@@ -7,74 +7,47 @@ import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
 import java.awt.*;
-import java.time.*;
+import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
 
-public class UserCommand extends Command {
+public class ServerCommand extends Command {
 
-    public UserCommand(){
-        super("userinfo", "Afficher les informations relative à un membre");
+    public ServerCommand(){
+        super("serverinfo", "Afficher les informations du serveur");
 
     }
 
     @Override
     public void execute(GuildMessageReceivedEvent event, String[] args){
 
-        Member member = event.getMember();
+        Guild guild = event.getGuild();
         TextChannel textChannel = event.getChannel();
 
-        if(args.length > 0){
-            List<Member> memberList = event.getMessage().getMentionedMembers();
-            if(memberList.isEmpty()){
-                textChannel.sendMessage("Couldn't find the mentioned user, please retry!").queue();
-                return;
+        embed(guild, textChannel);
 
-            }
-
-            Member target = memberList.get(0);
-            embed(target, textChannel);
-
-        } else {
-            embed(member, textChannel);
-
-        }
 
     }
 
-    private void embed(Member member, MessageChannel messageChannel){
-
-        User user = member.getUser();
+    private void embed(Guild guild, MessageChannel messageChannel){
 
         EmbedBuilder embedBuilder = new EmbedBuilder();
-        embedBuilder.setAuthor(user.getAsTag(), null, user.getAvatarUrl());
-        embedBuilder.setThumbnail(user.getAvatarUrl());
+        embedBuilder.setAuthor(guild.getName(), null, guild.getIconUrl());
+        embedBuilder.setThumbnail(guild.getBannerUrl());
 
-        embedBuilder.addField("Pseudonyme", nickname(member), true);
-        embedBuilder.addField("Statut", member.getOnlineStatus(ClientType.DESKTOP).getKey(), true);
-        embedBuilder.addField("En train de jouer", playing(member), true);
-        embedBuilder.addField("Mention", member.getAsMention(), true);
-        embedBuilder.addField("ID", user.getId(), true);
-        embedBuilder.addField("A rejoint le serveur", date(member.getTimeJoined()), false);
+        embedBuilder.addField("Région", guild.getRegion().getName(), true);
+        embedBuilder.addField("Membres", String.valueOf(guild.getMemberCount()), true);
+        embedBuilder.addField("Canaux", guild.getTextChannels().size() + " textuels / " + guild.getVoiceChannels().size() + " vocaux", true);
+        embedBuilder.addField("Créateur", guild.getOwner().getUser().getAsTag(), true);
+        embedBuilder.addField("Server Booster", guild.getBoostCount() + " Boost (Niveau " + guild.getBoostTier().getKey() + ")", true);
+        embedBuilder.addField("Lien d'invitation", guild.getVanityUrl() == null ? "n/a" : guild.getVanityUrl(), true);
+        embedBuilder.addField("ID", guild.getId(), true);
+        embedBuilder.addField("Rôles", roleList(guild), false);
 
-        if(member.getTimeBoosted() != null)
-        embedBuilder.addField("Booster de serveurs depuis", date(member.getTimeBoosted()), false);
-
-        embedBuilder.addField("Rôles", roleList(member), false);
-
-
-
-        embedBuilder.setFooter("Created: " + date(member.getTimeCreated()));
+        embedBuilder.setFooter("Created: " + date(guild.getTimeCreated()));
         embedBuilder.setColor(new Color(31,31,31));
 
         MessageEmbed embed = embedBuilder.build();
         messageChannel.sendMessage(embed).queue();
-
-    }
-
-    private String nickname(Member member){
-        String nickname = member.getNickname();
-        return nickname != null ? nickname : "n/a";
 
     }
 
@@ -135,33 +108,16 @@ public class UserCommand extends Command {
 
     }
 
-    private String roleList(Member member){
+    private String roleList(Guild guild){
 
-        StringBuilder stringBuilder = new StringBuilder("@everyone");
-        for(Role role : member.getRoles()){
-            stringBuilder.append(", ");
+        StringBuilder stringBuilder = new StringBuilder();
+        for(Role role : guild.getRoles()){
             stringBuilder.append(role.getName());
+            stringBuilder.append(", ");
 
         }
 
-        return stringBuilder.toString();
-
-    }
-
-    private String playing(Member member){
-
-        List<Activity> activities = member.getActivities();
-        if(activities.isEmpty()){
-            return "n/a";
-
-        }
-
-        for(Activity activity : activities){
-            return activity.getName();
-
-        }
-
-        return "n/a";
+        return stringBuilder.toString().substring(0, stringBuilder.length()-2);
 
     }
 

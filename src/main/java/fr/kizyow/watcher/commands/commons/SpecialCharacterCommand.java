@@ -1,4 +1,4 @@
-package fr.kizyow.watcher.commands.defaults;
+package fr.kizyow.watcher.commands.commons;
 
 import fr.kizyow.watcher.commands.Command;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;

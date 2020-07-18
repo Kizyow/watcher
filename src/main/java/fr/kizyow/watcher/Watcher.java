@@ -2,9 +2,9 @@ package fr.kizyow.watcher;
 
 import fr.kizyow.watcher.commands.CommandListener;
 import fr.kizyow.watcher.commands.CommandManager;
-import fr.kizyow.watcher.commands.defaults.*;
-import fr.kizyow.watcher.commands.defaults.mod.BanCommand;
-import fr.kizyow.watcher.commands.defaults.mod.KickCommand;
+import fr.kizyow.watcher.commands.commons.*;
+import fr.kizyow.watcher.commands.mod.BanCommand;
+import fr.kizyow.watcher.commands.mod.KickCommand;
 import fr.kizyow.watcher.listeners.GuildJoinListener;
 import fr.kizyow.watcher.loggers.LoggerListener;
 import fr.kizyow.watcher.loggers.LoggerManager;

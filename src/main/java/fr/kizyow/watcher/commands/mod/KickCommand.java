@@ -1,4 +1,4 @@
-package fr.kizyow.watcher.commands.defaults.mod;
+package fr.kizyow.watcher.commands.mod;
 
 import fr.kizyow.watcher.commands.Command;
 import net.dv8tion.jda.api.EmbedBuilder;
