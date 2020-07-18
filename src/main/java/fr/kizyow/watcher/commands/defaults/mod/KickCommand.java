@@ -12,7 +12,7 @@ import java.util.List;
 public class KickCommand extends Command {
 
     public KickCommand(){
-        super("ban", "Bannir un joueur", Permission.KICK_MEMBERS);
+        super("kick", "Exclure un joueur", Permission.KICK_MEMBERS);
     }
 
     @Override
