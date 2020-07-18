@@ -56,7 +56,13 @@ public class UserCommand extends Command {
         embedBuilder.addField("Mention", member.getAsMention(), true);
         embedBuilder.addField("ID", user.getId(), true);
         embedBuilder.addField("A rejoint le serveur", date(member.getTimeJoined()), false);
+
+        if(member.getTimeBoosted() != null)
+        embedBuilder.addField("Booster de serveurs depuis", date(member.getTimeBoosted()), false);
+
         embedBuilder.addField("Rôles", roleList(member), false);
+
+
 
         embedBuilder.setFooter("Created: " + date(member.getTimeCreated()));
         embedBuilder.setColor(new Color(31,31,31));

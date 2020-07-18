@@ -47,7 +47,6 @@ public class Watcher {
         commandManager.registerCommand(new SpecialCharacterCommand());
         commandManager.registerCommand(new ServerCommand());
         commandManager.registerCommand(new CheckCommand());
-
     }
 
     public void activity(String activity){
