@@ -37,7 +37,7 @@ public class HelpCommand extends Command {
 
         }
 
-        embedBuilder.setFooter("» Request time: " + messageChannel.getJDA().getRestPing().complete() + "ms", member.getUser().getAvatarUrl());
+        embedBuilder.setFooter("Request time: " + messageChannel.getJDA().getRestPing().complete() + "ms", member.getUser().getAvatarUrl());
         embedBuilder.setTimestamp(Instant.now());
         embedBuilder.setColor(new Color(31,31,31));
 
