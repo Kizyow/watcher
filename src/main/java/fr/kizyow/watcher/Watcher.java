@@ -47,7 +47,7 @@ public class Watcher {
         commandManager.registerCommand(new CreditCommand());
         commandManager.registerCommand(new SpecialCharacterCommand());
         commandManager.registerCommand(new ServerCommand());
-        commandManager.registerCommand(new LauCommand());
+     //   commandManager.registerCommand(new LauCommand());
         commandManager.registerCommand(new BanCommand());
         commandManager.registerCommand(new KickCommand());
     }
