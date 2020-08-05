@@ -1,6 +1,7 @@
 package fr.kizyow.watcher.commands.commons;
 
 import fr.kizyow.watcher.commands.Command;
+import fr.kizyow.watcher.commands.CommandCategory;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 

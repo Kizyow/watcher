@@ -4,7 +4,9 @@ import fr.kizyow.watcher.commands.CommandListener;
 import fr.kizyow.watcher.commands.CommandManager;
 import fr.kizyow.watcher.commands.commons.*;
 import fr.kizyow.watcher.commands.mod.BanCommand;
+import fr.kizyow.watcher.commands.mod.IgnoreCommand;
 import fr.kizyow.watcher.commands.mod.KickCommand;
+import fr.kizyow.watcher.commands.mod.ShutdownCommand;
 import fr.kizyow.watcher.listeners.GuildJoinListener;
 import fr.kizyow.watcher.loggers.LoggerListener;
 import fr.kizyow.watcher.loggers.LoggerManager;
@@ -47,7 +49,7 @@ public class Watcher {
         commandManager.registerCommand(new CreditCommand());
         commandManager.registerCommand(new SpecialCharacterCommand());
         commandManager.registerCommand(new ServerCommand());
-     //   commandManager.registerCommand(new LauCommand());
+        commandManager.registerCommand(new LauCommand());
         commandManager.registerCommand(new BanCommand());
         commandManager.registerCommand(new KickCommand());
     }
@@ -60,7 +62,6 @@ public class Watcher {
     public void cache(){
         jdaBuilder.enableIntents(GatewayIntent.GUILD_PRESENCES, GatewayIntent.GUILD_MEMBERS);
         jdaBuilder.enableCache(CacheFlag.CLIENT_STATUS, CacheFlag.ACTIVITY);
-
     }
 
     public JDA build(){

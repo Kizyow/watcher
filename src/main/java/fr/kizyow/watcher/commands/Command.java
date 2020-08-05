@@ -11,31 +11,27 @@ public abstract class Command {
 
     public Command(String command, String description){
         this(command, description, Permission.EMPTY_PERMISSIONS);
-
     }
 
     public Command(String command, String description, Permission... permissions){
         this.command = command;
         this.description = description;
-        this.permissions = permissions;
 
+        this.permissions = permissions;
     }
 
     public abstract void execute(GuildMessageReceivedEvent event, String[] args);
 
     public String getCommand(){
         return command;
-
     }
 
     public String getDescription(){
         return description;
-
     }
 
     public Permission[] getPermissions(){
         return permissions;
-
     }
 
 }

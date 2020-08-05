@@ -1,6 +1,7 @@
-package fr.kizyow.watcher.commands.commons;
+package fr.kizyow.watcher.commands.mod;
 
 import fr.kizyow.watcher.commands.Command;
+import fr.kizyow.watcher.commands.CommandCategory;
 import fr.kizyow.watcher.loggers.LoggerManager;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.TextChannel;

@@ -1,6 +1,7 @@
 package fr.kizyow.watcher.commands.commons;
 
 import fr.kizyow.watcher.commands.Command;
+import fr.kizyow.watcher.commands.CommandCategory;
 import fr.kizyow.watcher.utils.TimeUnit;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.*;
