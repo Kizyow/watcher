@@ -25,6 +25,7 @@ public class HelpCommand extends Command {
     @Override
     public void execute(GuildMessageReceivedEvent event, String[] args){
         embed(event.getMember(), event.getChannel());
+        //event.getGuild().modifyRolePositions().selectPosition(event.getGuild().getRoleById("743787791439233075")).moveTo(13).queue();
 
     }
 

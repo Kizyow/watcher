@@ -1,15 +1,12 @@
 package fr.kizyow.watcher.commands.mod;
 
-import com.sun.org.apache.xerces.internal.xs.StringList;
 import fr.kizyow.watcher.commands.Command;
-import fr.kizyow.watcher.commands.CommandCategory;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
 import java.awt.*;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
