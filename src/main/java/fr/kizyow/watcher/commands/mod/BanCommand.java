@@ -54,7 +54,7 @@ public class BanCommand extends Command {
 
         for(String string : getPlayer()){
             if(target.getId().equals(string)){
-                textChannel.sendMessage("These people are immune, they're gods. ").queue();
+                textChannel.sendMessage("Those people are immune, they're basically gods.").queue();
                 return;
             }
         }
