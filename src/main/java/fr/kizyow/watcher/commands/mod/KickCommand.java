@@ -31,6 +31,18 @@ public class KickCommand extends Command {
         Member target = memberList.get(0);
         User user = target.getUser();
 
+        if (user.getId().equals(event.getAuthor().getId())){
+            textChannel.sendMessage("You can't punish yourself.").queue();
+            return;
+        }
+
+        for(String string : BanCommand.getPlayer()){
+            if(target.getId().equals(string)){
+                textChannel.sendMessage("These people are immune, they're gods. ").queue();
+                return;
+            }
+        }
+
         guild.kick(target).queue();
         createEmbed(target, textChannel);
     }
