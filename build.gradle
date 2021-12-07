@@ -1,15 +1,29 @@
 plugins {
+    id 'com.github.johnrengelman.shadow' version '7.1.0'
     id 'java'
 }
 
 group 'fr.kizyow'
 version '1.0'
 
+compileJava.options.encoding = 'UTF-8'
+
+jar {
+    manifest { attributes 'Main-Class': 'fr.kizyow.bot.Application' }
+}
+
 repositories {
+    mavenLocal()
     mavenCentral()
 }
 
 dependencies {
+    implementation group: 'net.dv8tion', name: 'JDA', version: '5.0.0-alpha.2'
+    implementation group: 'org.yaml', name: 'snakeyaml', version: '1.29'
+    implementation group: 'com.google.guava', name: 'guava', version: '31.0.1-jre'
+    implementation group: 'com.google.code.gson', name: 'gson', version: '2.8.9'
+    implementation group: 'commons-io', name: 'commons-io', version: '2.11.0'
+    implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.27'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
 }
@@ -17,3 +31,4 @@ dependencies {
 test {
     useJUnitPlatform()
 }
+
