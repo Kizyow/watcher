@@ -13,39 +13,40 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
-public class ConfigManager<T> {
+public class ConfigManager {
 
-    private final Class<T> configClass;
     private final Logger logger = LoggerFactory.getLogger(ConfigManager.class);
-
-    public ConfigManager(Class<T> configClass) {
-        if (configClass == null)
-            logger.error("You must specify a config class to use the ConfigManager", new NullPointerException());
-        this.configClass = configClass;
-    }
 
     /**
      * Load a config to use in the program or create if it doesn't exist
      *
-     * @param name The name of the config
+     * @param name        The name of the config
+     * @param configClass The class that will hold the config
      * @return An instance of the config
      */
-    public T loadConfig(String name) {
-        logger.debug("Loading '" + configClass.getName() + "' instance with custom properties");
+    public <T> T loadConfig(String name, Class<?> configClass) {
+        if (name == null || name.isEmpty() || name.isBlank())
+            throw new NullPointerException("The config name should be valid!");
+        if (configClass == null) throw new NullPointerException("The config class should be valid!");
+
+        logger.debug("Loading '" + configClass.getSimpleName() + "' instance with custom properties");
         Constructor constructor = new Constructor(configClass);
         CustomProperty property = new CustomProperty();
         constructor.setPropertyUtils(property);
 
         File file = new File(name);
-        if (!file.isFile()) this.copyConfig(name);
+        if (!file.isFile()) {
+            this.copyConfig(name);
+        }
 
         Yaml yaml = new Yaml(constructor);
-        InputStream inputStream = null;
+        InputStream inputStream;
 
         try {
             inputStream = new FileInputStream(file);
         } catch (FileNotFoundException e) {
-            logger.error("The file wasn't found, maybe '" + name + "' is missing in the resources folder", e.getCause());
+            logger.error("The file wasn't found, '" + name + "' is missing in the resources folder");
+            return null;
         }
 
         return yaml.load(inputStream);
@@ -58,11 +59,14 @@ public class ConfigManager<T> {
      * @param name The name of the config
      */
     public void copyConfig(String name) {
-        try (InputStream inputStream = configClass.getClassLoader().getResourceAsStream(name)) {
+        if (name == null || name.isEmpty() || name.isBlank())
+            throw new NullPointerException("The config name should be valid!");
+
+        try (InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream(name)) {
             logger.debug("Copying default '" + name + "' outside the JAR");
 
             if (inputStream == null) {
-                logger.error("The file wasn't found in the resources folder", new NullPointerException());
+                logger.error("Copy failed, the file wasn't found in the resources folder", new NullPointerException());
                 return;
             }
 
@@ -74,7 +78,7 @@ public class ConfigManager<T> {
     }
 
     /**
-     * Replace the hypens parameter of the config to camelCase parameters for convenience
+     * Replace the hyphens' parameter of the config to camelCase parameters for convenience
      */
     static class CustomProperty extends PropertyUtils {
 
