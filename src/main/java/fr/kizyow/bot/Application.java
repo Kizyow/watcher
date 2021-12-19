@@ -12,21 +12,31 @@ public class Application {
     public static void main(String[] args) {
 
         ConfigManager configManager = new ConfigManager();
-        BotConfig config = configManager.loadConfig("config.yml", BotConfig.class);
+        BotConfig botConfig = configManager.loadConfig("config.yml", BotConfig.class);
 
-        if (config == null) {
+        if (botConfig == null) {
             logger.error("The config couldn't be loaded because the file is missing or corrupted", new NullPointerException());
             return;
         }
 
         Application application = new Application();
-        application.launchBot(config);
-
+        application.launchBot(botConfig);
 
     }
 
-    public void launchBot(BotConfig config) {
-        logger.info(config.getToken());
+    public void launchBot(BotConfig botConfig){
+
+        String token = botConfig.getToken();
+        if (token == null || token.isBlank() || token.isEmpty()) {
+            logger.error("The token wasn't found on the config.yml!", new NullPointerException());
+            System.exit(1);
+        }
+
+        Bot bot = new Bot(token, botConfig);
+        bot.registerListener();
+        bot.registerCommand();
+        bot.build();
+
     }
 
 }

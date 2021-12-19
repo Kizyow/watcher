@@ -3,6 +3,7 @@ package fr.kizyow.bot.configurations;
 import com.google.common.base.CaseFormat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.yaml.snakeyaml.DumperOptions;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.Constructor;
 import org.yaml.snakeyaml.introspector.Property;
@@ -28,6 +29,7 @@ public class ConfigManager {
         if (name == null || name.isEmpty() || name.isBlank())
             throw new NullPointerException("The config name should be valid!");
         if (configClass == null) throw new NullPointerException("The config class should be valid!");
+        logger.info("Loading '" + name + "'");
 
         logger.debug("Loading '" + configClass.getSimpleName() + "' instance with custom properties");
         Constructor constructor = new Constructor(configClass);
@@ -50,6 +52,32 @@ public class ConfigManager {
         }
 
         return yaml.load(inputStream);
+
+    }
+
+    /**
+     * Override the current config with the news values
+     * NB: The comments will be deleted too
+     *
+     * @param config The config object to save
+     * @param name   The name of the config
+     */
+    public void saveConfig(Object config, String name) {
+
+        DumperOptions options = new DumperOptions();
+        options.setIndent(2);
+        options.setPrettyFlow(true);
+        options.setDefaultFlowStyle(DumperOptions.FlowStyle.BLOCK);
+        Yaml yaml = new Yaml(options);
+        File file = new File(name);
+
+        try {
+            PrintWriter printWriter = new PrintWriter(file);
+            yaml.dump(config, printWriter);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
 
     }
 
