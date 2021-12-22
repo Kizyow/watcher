@@ -22,7 +22,7 @@ public class HelpCommand extends GuildCommand {
     public HelpCommand(Bot bot) {
         super("help", "Afficher la liste des commandes");
         this.commandManager = bot.getCommandManager();
-        this.COMMAND_PREFIX = bot.getBotConfig().getDefaultCommandPrefix();
+        this.COMMAND_PREFIX = bot.getConfig().getDefaultCommandPrefix();
     }
 
     @Override
