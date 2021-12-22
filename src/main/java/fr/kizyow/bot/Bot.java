@@ -75,15 +75,11 @@ public class Bot {
 
     public void a() {
 
-        ResultSet resultSet = database.executeQuery("SELECT * FROM logs");
+        ResultSet resultSet = database.executeQuery("SELECT * FROM guild");
         if(resultSet == null) return;
 
         List<SQLData> dataList = SQLData.fromResultSet(resultSet);
-        dataList.forEach(data -> logger.info(data.getLong("message_id") + ", "
-                + data.getString("message_content") + ", "
-                + data.getDate("message_date") + ", "
-                + data.getLong("user_id") + ", "
-                + data.getLong("id_ticket")));
+        dataList.forEach(data -> logger.info(String.valueOf(data.getLong("id"))));
 
     }
 
@@ -93,14 +89,10 @@ public class Bot {
 
             try (Statement statement = database.getConnection().createStatement()) {
 
-                ResultSet resultSet = statement.executeQuery("SELECT * FROM logs");
+                ResultSet resultSet = statement.executeQuery("SELECT * FROM guild");
 
                 while (resultSet.next()) {
-                    logger.info(resultSet.getString("message_id") + ", "
-                            + resultSet.getString("message_content") + ", "
-                            + resultSet.getString("message_date") + ", "
-                            + resultSet.getString("user_id") + ", "
-                            + resultSet.getString("id_ticket"));
+                    logger.info(resultSet.getString("id"));
                 }
 
                 resultSet.close();
