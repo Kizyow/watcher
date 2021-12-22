@@ -7,7 +7,7 @@ import java.util.*;
 
 public class SQLData {
 
-    private Map<String, Object> dataMap;
+    private final Map<String, Object> dataMap;
     private ResultSetMetaData metaData;
 
 
@@ -15,8 +15,13 @@ public class SQLData {
         this.dataMap = new HashMap<>();
 
         try {
-            if (resultSet != null) this.metaData = resultSet.getMetaData();
-        } catch (SQLException ignored) {
+
+            if (resultSet != null) {
+                this.metaData = resultSet.getMetaData();
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
 
         this._initWith(resultSet);
@@ -25,16 +30,14 @@ public class SQLData {
 
 
     public String getString(String key) {
-        Object o = this.getObject(key);
-
-        if (o instanceof String) return (String) o;
-        else return null;
+        Object object = this.getObject(key);
+        return String.valueOf(object);
     }
 
     public Integer getInteger(String key) {
-        Object o = this.getObject(key);
+        Object object = this.getObject(key);
 
-        if (o instanceof Integer) return (Integer) o;
+        if (object instanceof Integer) return (Integer) object;
         else return null;
     }
 
@@ -97,6 +100,11 @@ public class SQLData {
         }
     }
 
+    public String toString() {
+        return "{SQLDataSet (keys=" + Arrays.deepToString(this.dataMap.keySet().toArray()) + " values=" + Arrays.deepToString(this.dataMap.values().toArray()) + ")}";
+    }
+
+
     public static List<SQLData> fromResultSet(ResultSet resultSet) {
         List<SQLData> dataSets = new ArrayList<>();
         SQLData dataSet;
@@ -108,6 +116,12 @@ public class SQLData {
             else dataSets.add(dataSet);
         }
         while (dataSet != null);
+
+        try {
+            resultSet.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
         return dataSets;
     }

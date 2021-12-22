@@ -5,18 +5,18 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.sql.*;
-import java.util.Optional;
 
 public class Database {
 
     private Connection connection;
 
-    private final Logger logger = LoggerFactory.getLogger(Database.class);
+    private static final Logger logger = LoggerFactory.getLogger(Database.class);
+    private static Database instance;
 
     /**
      * Connect to the database
      */
-    public Database() {
+    private Database() {
 
         logger.info("Loading database instance...");
         ConfigManager configManager = new ConfigManager();
@@ -37,12 +37,13 @@ public class Database {
      * @param query The SQL request
      * @return A ResultSet
      */
-    public ResultSet executeQuery(String query) {
+    public static ResultSet executeQuery(String query) {
 
-        if (this.isConnected()) {
+        if (isConnected()) {
 
             try {
 
+                Connection connection = getConnection();
                 Statement statement = connection.createStatement();
                 return statement.executeQuery(query);
 
@@ -63,15 +64,16 @@ public class Database {
      * @param parameters The parameters of the request
      * @return A ResultSet
      */
-    public ResultSet executePreparedQuery(String query, Object... parameters) {
+    public static ResultSet executePreparedQuery(String query, Object... parameters) {
 
-        if (this.isConnected()) {
+        if (isConnected()) {
 
             try {
 
+                Connection connection = getConnection();
                 PreparedStatement preparedStatement = connection.prepareStatement(query);
-                for (int i = 0; i < parameters.length; i++) {
-                    Object parameter = parameters[i];
+                for (int i = 1; i <= parameters.length; i++) {
+                    Object parameter = parameters[i-1];
                     preparedStatement.setObject(i, parameter);
                 }
 
@@ -93,11 +95,13 @@ public class Database {
      * @param request The SQL request
      * @return The number of lines updated
      */
-    public int executeUpdate(String request) {
+    public static int execute(String request) {
 
-        if (this.isConnected()) {
+        if (isConnected()) {
 
             try {
+
+                Connection connection = getConnection();
                 Statement statement = connection.createStatement();
                 return statement.executeUpdate(request);
 
@@ -118,15 +122,16 @@ public class Database {
      * @param parameters The parameters of the request
      * @return The numbers of lines updated
      */
-    public int executePreparedUpdate(String request, Object... parameters) {
+    public static int executePreparedUpdate(String request, Object... parameters) {
 
-        if (this.isConnected()) {
+        if (isConnected()) {
 
             try {
 
+                Connection connection = getConnection();
                 PreparedStatement preparedStatement = connection.prepareStatement(request);
-                for (int i = 0; i < parameters.length; i++) {
-                    Object parameter = parameters[i];
+                for (int i = 1; i <= parameters.length; i++) {
+                    Object parameter = parameters[i-1];
                     preparedStatement.setObject(i, parameter);
                 }
 
@@ -148,24 +153,18 @@ public class Database {
      * @param table The table name
      * @return a boolean
      */
-    public boolean tableExist(String table) {
+    public static boolean tableExist(String table) {
 
-        if (this.isConnected()) {
+        ResultSet resultSet = executePreparedQuery(
+                "SELECT EXISTS(SELECT 1 FROM information_schema.tables WHERE table_name = ?)",
+                table);
 
-            ResultSet resultSet = executePreparedQuery(
-                    "SELECT EXISTS(SELECT 1 FROM information_schema.tables WHERE table_name = ?)",
-                    table);
-
-            try {
-                return resultSet != null && resultSet.next() && resultSet.getBoolean(1);
-
-            } catch (SQLException e) {
-                logger.error("An error occurred while checking if a table exist in the database", e);
-            }
-
+        try {
+            return resultSet != null && resultSet.next() && resultSet.getBoolean(1);
+        } catch (SQLException e) {
+            logger.error("An error occurred while checking if a table exist in the database", e);
+            return false;
         }
-
-        return false;
 
     }
 
@@ -174,8 +173,8 @@ public class Database {
      *
      * @return A Connection to the Database
      */
-    public Connection getConnection() {
-        return this.connection;
+    public static Connection getConnection() {
+        return Database.getInstance().connection;
     }
 
     /**
@@ -183,15 +182,21 @@ public class Database {
      *
      * @return a boolean
      */
-    public boolean isConnected() {
+    public static boolean isConnected() {
 
         try {
+            Connection connection = getConnection();
             return connection != null && !connection.isClosed() && connection.isValid(5);
         } catch (SQLException e) {
             logger.error("An error occurred while checking the connection to the database", e);
             return false;
         }
 
+    }
+
+    private static Database getInstance() {
+        if (instance == null) instance = new Database();
+        return instance;
     }
 
 }
