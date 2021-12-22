@@ -13,12 +13,11 @@ public class Database {
     private Connection connection;
 
     private static final Logger logger = LoggerFactory.getLogger(Database.class);
-    private static Database instance;
 
     /**
      * Connect to the database
      */
-    private Database() {
+    public Database() {
 
         logger.info("Loading database instance...");
         ConfigManager configManager = new ConfigManager();
@@ -54,15 +53,6 @@ public class Database {
             return false;
         }
 
-    }
-
-    /**
-     * Get the Database instance
-     * @return An Database object
-     */
-    public static Database getInstance() {
-        if (instance == null) instance = new Database();
-        return instance;
     }
 
 }

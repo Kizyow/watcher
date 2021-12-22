@@ -4,6 +4,7 @@ import fr.kizyow.bot.commands.CommandListener;
 import fr.kizyow.bot.commands.CommandManager;
 import fr.kizyow.bot.commands.commons.HelpCommand;
 import fr.kizyow.bot.configurations.BotConfig;
+import fr.kizyow.bot.database.Database;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.requests.GatewayIntent;
@@ -19,6 +20,7 @@ public class Bot {
 
     private final BotConfig botConfig;
     private final CommandManager commandManager;
+    private final Database database;
     private final JDABuilder jdaBuilder;
     private final Logger logger = LoggerFactory.getLogger(Bot.class);
 
@@ -27,6 +29,7 @@ public class Bot {
     public Bot(String token, BotConfig botConfig) {
         this.botConfig = botConfig;
         this.commandManager = new CommandManager();
+        this.database = new Database();
         this.jdaBuilder = JDABuilder.createDefault(token);
 
         // Configuration of the bot to properly use/listen/cache everything
@@ -76,6 +79,10 @@ public class Bot {
 
     public CommandManager getCommandManager() {
         return commandManager;
+    }
+
+    public Database getDatabase() {
+        return database;
     }
 
     public JDA getJDA() {
