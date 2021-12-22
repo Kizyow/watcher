@@ -15,6 +15,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.security.auth.login.LoginException;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 public class Bot {
 
@@ -69,6 +73,19 @@ public class Bot {
         if(jda == null){
             logger.error("JDA is not setup properly, please restart the bot or contact an administrator", new NullPointerException());
             System.exit(1);
+        }
+
+        if(database.isConnected()) {
+            try (Statement statement = database.getConnection().createStatement()) {
+
+                ResultSet resultSet = statement.executeQuery("SELECT * FROM logs");
+                while (resultSet.next()) {
+                    logger.info(resultSet.getString(1) + ", " + resultSet.getString(2) + ", " + resultSet.getString(3) + ", " + resultSet.getString(4)+ ", " + resultSet.getString(5));
+                }
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
 
     }
