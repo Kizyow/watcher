@@ -20,7 +20,7 @@ public class HelpCommand extends GuildCommand {
     private final String COMMAND_PREFIX;
 
     public HelpCommand(Bot bot) {
-        super("help", new String[]{"h", "he", "hel"}, "Afficher la liste des commandes");
+        super("help", "Afficher la liste des commandes");
         this.commandManager = bot.getCommandManager();
         this.COMMAND_PREFIX = bot.getBotConfig().getCommandPrefix();
     }
@@ -36,7 +36,11 @@ public class HelpCommand extends GuildCommand {
 
         for (Command command : commandManager.getCommandList()) {
             if (member.hasPermission(command.getPermissions())) {
-                embedBuilder.addField(COMMAND_PREFIX + command.getName() + " " + Arrays.toString(command.getAliases()), command.getDescription(), true);
+                if (command.getAliases().length > 1) {
+                    embedBuilder.addField(COMMAND_PREFIX + command.getName() + " " + Arrays.toString(command.getAliases()), command.getDescription(), true);
+                } else {
+                    embedBuilder.addField(COMMAND_PREFIX + command.getName(), command.getDescription(), true);
+                }
             }
         }
 
