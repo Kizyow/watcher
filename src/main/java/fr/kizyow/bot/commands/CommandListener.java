@@ -23,7 +23,7 @@ public class CommandListener extends ListenerAdapter {
 
     public CommandListener(Bot bot) {
         this.commandManager = bot.getCommandManager();
-        this.COMMAND_PREFIX = bot.getBotConfig().getCommandPrefix();
+        this.COMMAND_PREFIX = bot.getBotConfig().getDefaultCommandPrefix();
     }
 
     @Override

@@ -3,7 +3,7 @@ package fr.kizyow.bot.configurations;
 public class BotConfig {
 
     private String token;
-    private String commandPrefix;
+    private String defaultCommandPrefix;
 
     public String getToken() {
         return token;
@@ -13,12 +13,12 @@ public class BotConfig {
         this.token = token;
     }
 
-    public String getCommandPrefix() {
-        return commandPrefix;
+    public String getDefaultCommandPrefix() {
+        return defaultCommandPrefix;
     }
 
-    public void setCommandPrefix(String commandPrefix) {
-        this.commandPrefix = commandPrefix;
+    public void setDefaultCommandPrefix(String defaultCommandPrefix) {
+        this.defaultCommandPrefix = defaultCommandPrefix;
     }
 
 }

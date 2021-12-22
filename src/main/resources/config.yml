@@ -1,2 +1,2 @@
 token: ""
-command-prefix: "!"
+default-command-prefix: "!"
