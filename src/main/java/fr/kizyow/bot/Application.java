@@ -11,20 +11,20 @@ public class Application {
 
     public static void main(String[] args) {
 
+        Application application = new Application();
+        application.launchBot();
+
+    }
+
+    public Bot launchBot(){
+
         ConfigManager configManager = new ConfigManager();
         BotConfig botConfig = configManager.loadConfig("config.yml", BotConfig.class);
 
         if (botConfig == null) {
             logger.error("The config couldn't be loaded because the file is missing or corrupted", new NullPointerException());
-            return;
+            return null;
         }
-
-        Application application = new Application();
-        application.launchBot(botConfig);
-
-    }
-
-    public void launchBot(BotConfig botConfig){
 
         String token = botConfig.getToken();
         if (token == null || token.isBlank() || token.isEmpty()) {
@@ -36,6 +36,8 @@ public class Application {
         bot.registerListener();
         bot.registerCommand();
         bot.build();
+
+        return bot;
 
     }
 

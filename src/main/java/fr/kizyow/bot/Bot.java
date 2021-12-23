@@ -1,13 +1,9 @@
 package fr.kizyow.bot;
 
-import com.google.common.base.Stopwatch;
 import fr.kizyow.bot.commands.CommandListener;
 import fr.kizyow.bot.commands.CommandManager;
-import fr.kizyow.bot.commands.commons.HelpCommand;
+import fr.kizyow.bot.commands.commons.*;
 import fr.kizyow.bot.configurations.BotConfig;
-import fr.kizyow.bot.database.Database;
-import fr.kizyow.bot.database.SQLData;
-import fr.kizyow.bot.database.tables.GuildTable;
 import fr.kizyow.bot.listeners.GuildListener;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
@@ -19,10 +15,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.security.auth.login.LoginException;
-import java.sql.ResultSet;
-import java.util.List;
-import java.util.Scanner;
-import java.util.concurrent.TimeUnit;
 
 public class Bot {
 
@@ -60,6 +52,18 @@ public class Bot {
 
         HelpCommand helpCommand = new HelpCommand(this);
         commandManager.registerCommand(helpCommand);
+
+        ReloadCommand reloadCommand = new ReloadCommand(this);
+        commandManager.registerCommand(reloadCommand);
+
+        ShutdownCommand shutdownCommand = new ShutdownCommand(this);
+        commandManager.registerCommand(shutdownCommand);
+
+        PromoteCommand promoteCommand = new PromoteCommand();
+        commandManager.registerCommand(promoteCommand);
+
+        DepromoteCommand depromoteCommand = new DepromoteCommand();
+        commandManager.registerCommand(depromoteCommand);
 
     }
 

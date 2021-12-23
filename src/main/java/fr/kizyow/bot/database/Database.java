@@ -73,7 +73,7 @@ public class Database {
                 Connection connection = getConnection();
                 PreparedStatement preparedStatement = connection.prepareStatement(query);
                 for (int i = 1; i <= parameters.length; i++) {
-                    Object parameter = parameters[i-1];
+                    Object parameter = parameters[i - 1];
                     preparedStatement.setObject(i, parameter);
                 }
 
@@ -131,7 +131,7 @@ public class Database {
                 Connection connection = getConnection();
                 PreparedStatement preparedStatement = connection.prepareStatement(request);
                 for (int i = 1; i <= parameters.length; i++) {
-                    Object parameter = parameters[i-1];
+                    Object parameter = parameters[i - 1];
                     preparedStatement.setObject(i, parameter);
                 }
 
@@ -190,6 +190,20 @@ public class Database {
         } catch (SQLException e) {
             logger.error("An error occurred while checking the connection to the database", e);
             return false;
+        }
+
+    }
+
+    public static void closeInstance() {
+
+        if (isConnected()) {
+            Connection connection = getConnection();
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            instance = null;
         }
 
     }

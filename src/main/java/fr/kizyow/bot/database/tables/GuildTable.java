@@ -1,8 +1,12 @@
 package fr.kizyow.bot.database.tables;
 
 import fr.kizyow.bot.database.Database;
+import fr.kizyow.bot.database.SQLData;
 import fr.kizyow.bot.database.Table;
 import net.dv8tion.jda.api.entities.Guild;
+
+import java.sql.ResultSet;
+import java.util.List;
 
 public class GuildTable extends Table {
 
@@ -15,6 +19,15 @@ public class GuildTable extends Table {
                 "INSERT INTO guild VALUES(?,?)",
                 guild.getIdLong(), guild.getName()
         );
+    }
+
+    public boolean guildExists(Guild guild) {
+        ResultSet resultSet = Database.executePreparedQuery(
+                "SELECT * FROM guild WHERE id = ?",
+                guild.getIdLong()
+        );
+        List<SQLData> dataList = SQLData.fromResultSet(resultSet);
+        return !dataList.isEmpty();
     }
 
     @Override

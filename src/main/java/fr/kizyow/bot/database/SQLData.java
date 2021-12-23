@@ -117,12 +117,6 @@ public class SQLData {
         }
         while (dataSet != null);
 
-        try {
-            resultSet.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
         return dataSets;
     }
 

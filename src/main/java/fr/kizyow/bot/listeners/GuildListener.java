@@ -12,7 +12,11 @@ public class GuildListener extends ListenerAdapter {
     public void onGuildJoin(@NotNull GuildJoinEvent event) {
         Guild guild = event.getGuild();
         GuildTable guildTable = new GuildTable();
-        guildTable.createGuild(guild);
+
+        if (!guildTable.guildExists(guild)) {
+            guildTable.createGuild(guild);
+        }
+
     }
 
 }

@@ -4,6 +4,7 @@ import fr.kizyow.bot.Bot;
 import fr.kizyow.bot.commands.Command;
 import fr.kizyow.bot.commands.CommandManager;
 import fr.kizyow.bot.commands.GuildCommand;
+import fr.kizyow.bot.database.tables.AdminTable;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.MessageEmbed;
@@ -36,7 +37,7 @@ public class HelpCommand extends GuildCommand {
 
         for (Command command : commandManager.getCommandList()) {
             if (member.hasPermission(command.getPermissions())) {
-                if (command.getAliases().length > 1) {
+                if (command.getAliases().length > 0) {
                     embedBuilder.addField(COMMAND_PREFIX + command.getName() + " " + Arrays.toString(command.getAliases()), command.getDescription(), true);
                 } else {
                     embedBuilder.addField(COMMAND_PREFIX + command.getName(), command.getDescription(), true);
@@ -45,7 +46,7 @@ public class HelpCommand extends GuildCommand {
         }
 
         embedBuilder.setTimestamp(Instant.now());
-        embedBuilder.setColor(Color.orange);
+        embedBuilder.setColor(new Color(255, 97, 110, 255));
 
         MessageEmbed embed = embedBuilder.build();
         channel.sendMessageEmbeds(embed).queue();
