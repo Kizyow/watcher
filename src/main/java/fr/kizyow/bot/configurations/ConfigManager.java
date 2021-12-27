@@ -112,9 +112,9 @@ public class ConfigManager {
     * @return the validity of the passed token through a boolean result
     */
     private boolean isValid(String configName){
-        return name != null 
-        && !name.isEmpty()
-        && !name.isBlank();
+        return configName != null
+        && !configName.isEmpty()
+        && !configName.isBlank();
     }
 
     /**
