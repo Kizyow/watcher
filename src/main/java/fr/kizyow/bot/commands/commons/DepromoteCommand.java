@@ -16,7 +16,7 @@ import static net.dv8tion.jda.api.requests.ErrorResponse.UNKNOWN_USER;
 public class DepromoteCommand extends GuildCommand {
 
     public DepromoteCommand() {
-        super("depromote", new String[]{"unrank"}, "Permet de retirer les permissions administrateur du bot");
+        super("depromote", "Permet de retirer les permissions administrateur du bot");
     }
 
     @Override

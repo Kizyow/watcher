@@ -4,7 +4,6 @@ import fr.kizyow.bot.Bot;
 import fr.kizyow.bot.commands.Command;
 import fr.kizyow.bot.commands.CommandManager;
 import fr.kizyow.bot.commands.GuildCommand;
-import fr.kizyow.bot.database.tables.AdminTable;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.MessageEmbed;

@@ -4,6 +4,7 @@ import fr.kizyow.bot.commands.CommandListener;
 import fr.kizyow.bot.commands.CommandManager;
 import fr.kizyow.bot.commands.commons.*;
 import fr.kizyow.bot.configurations.BotConfig;
+import fr.kizyow.bot.levels.RankCommand;
 import fr.kizyow.bot.listeners.GuildListener;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
@@ -64,6 +65,9 @@ public class Bot {
 
         DepromoteCommand depromoteCommand = new DepromoteCommand();
         commandManager.registerCommand(depromoteCommand);
+
+        RankCommand rankCommand = new RankCommand();
+        commandManager.registerCommand(rankCommand);
 
     }
 

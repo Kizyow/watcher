@@ -1,6 +1,7 @@
 package fr.kizyow.bot.commands;
 
 import fr.kizyow.bot.Bot;
+import fr.kizyow.bot.levels.LevelManager;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
@@ -34,7 +35,10 @@ public class CommandListener extends ListenerAdapter {
         TextChannel channel = event.getChannel();
 
         if (user.isBot()) return;
-        if (!message.startsWith(COMMAND_PREFIX)) return;
+        if (!message.startsWith(COMMAND_PREFIX)) {
+            LevelManager.update(user, event.getMessage());
+            return;
+        }
 
         String[] messageCommandArgs = message.substring(COMMAND_PREFIX.length()).split(" ");
         String commandName = messageCommandArgs[0];

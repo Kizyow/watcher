@@ -13,7 +13,7 @@ import static net.dv8tion.jda.api.requests.ErrorResponse.UNKNOWN_USER;
 public class PromoteCommand extends GuildCommand {
 
     public PromoteCommand() {
-        super("promote", new String[]{"rank"}, "Permet de donner les permissions administrateur du bot");
+        super("promote", "Permet de donner les permissions administrateur du bot");
     }
 
     @Override
