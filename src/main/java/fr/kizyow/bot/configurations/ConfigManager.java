@@ -26,7 +26,7 @@ public class ConfigManager {
      * @return An instance of the config
      */
     public <T> T loadConfig(String name, Class<?> configClass) {
-        if (name == null || name.isEmpty() || name.isBlank())
+        if (!isValid(name))
             throw new NullPointerException("The config name should be valid!");
         if (configClass == null) throw new NullPointerException("The config class should be valid!");
         logger.info("Loading '" + name + "'");
@@ -87,7 +87,7 @@ public class ConfigManager {
      * @param name The name of the config
      */
     public void copyConfig(String name) {
-        if (name == null || name.isEmpty() || name.isBlank())
+        if (!isValid(name))
             throw new NullPointerException("The config name should be valid!");
 
         try (InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream(name)) {
@@ -103,6 +103,18 @@ public class ConfigManager {
             logger.error("File copy failed: ", e.getCause());
         }
 
+    }
+
+    /**
+    * Configuration name validator
+    *
+    * @param configName token to validate
+    * @return the validity of the passed token through a boolean result
+    */
+    private boolean isValid(String configName){
+        return name != null 
+        && !name.isEmpty()
+        && !name.isBlank();
     }
 
     /**
