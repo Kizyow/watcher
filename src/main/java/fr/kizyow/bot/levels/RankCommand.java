@@ -2,9 +2,7 @@ package fr.kizyow.bot.levels;
 
 import fr.kizyow.bot.commands.GuildCommand;
 import fr.kizyow.bot.database.tables.LevelTable;
-import fr.kizyow.bot.exceptions.ResourceNotFoundException;
 import fr.kizyow.bot.utils.FontUtils;
-import fr.kizyow.bot.utils.Optional;
 import fr.kizyow.bot.utils.StreamUtils;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.MessageEmbed;
