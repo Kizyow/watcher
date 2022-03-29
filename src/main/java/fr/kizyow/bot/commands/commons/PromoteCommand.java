@@ -1,5 +1,6 @@
 package fr.kizyow.bot.commands.commons;
 
+import fr.kizyow.bot.commands.CommandsArgsHelper;
 import fr.kizyow.bot.commands.GuildCommand;
 import fr.kizyow.bot.database.tables.AdminTable;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -33,7 +34,7 @@ public class PromoteCommand extends GuildCommand {
             return;
         }
 
-        if (args.length < 1) {
+        if (CommandsArgsHelper.argsSetCorrectly(args, 1)) {
             MessageEmbed embed = new EmbedBuilder()
                     .setDescription("❌ Vous devez mentionner un utilisateur ou son identifiant Discord")
                     .setColor(Color.red)

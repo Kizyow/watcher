@@ -1,5 +1,7 @@
 package fr.kizyow.bot.commands.commons;
 
+import fr.kizyow.bot.commands.CommandHelper;
+import fr.kizyow.bot.commands.CommandsArgsHelper;
 import fr.kizyow.bot.commands.GuildCommand;
 import fr.kizyow.bot.database.tables.AdminTable;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -7,10 +9,12 @@ import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.User;
+import net.dv8tion.jda.api.events.message.guild.GenericGuildMessageEvent;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
 import java.awt.*;
 
+import static fr.kizyow.bot.commands.CommandHelper.checkUserMentionedInArg;
 import static net.dv8tion.jda.api.requests.ErrorResponse.UNKNOWN_USER;
 
 public class DepromoteCommand extends GuildCommand {
@@ -36,15 +40,7 @@ public class DepromoteCommand extends GuildCommand {
             return;
         }
 
-        if (args.length < 1) {
-            MessageEmbed embed = new EmbedBuilder()
-                    .setDescription("❌ Vous devez mentionner un utilisateur ou son identifiant Discord")
-                    .setColor(Color.red)
-                    .build();
-
-            event.getChannel().sendMessageEmbeds(embed).queue();
-            return;
-        }
+        checkUserMentionedInArg(event, args);
 
         String targetUserId = args[0].replaceAll("[^0-9.]", "");
 
