@@ -12,12 +12,12 @@ import java.util.Random;
 public class LevelManager {
 
     public static final int BASE_LEVEL_XP = 201;
+    public static final Random random = new Random();
 
     public static void update(User user, Message message) {
 
         LevelTable levelTable = new LevelTable(message.getGuild().getId());
 
-        Random random = new Random();
         int xpGiven = random.nextInt(10, 25) + 1;
 
         long timeElapsed = message.getTimeCreated().toEpochSecond() - levelTable.getLastMessageUpdate(user);
@@ -45,5 +45,7 @@ public class LevelManager {
         }
 
     }
+
+    LevelManager(){}
 
 }

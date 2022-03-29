@@ -35,7 +35,7 @@ public class HelpCommand extends GuildCommand {
         embedBuilder.setTitle("Liste des commandes");
 
         for (Command command : commandManager.getCommandList()) {
-            if (member.hasPermission(command.getPermissions())) {
+            if (member != null && member.hasPermission(command.getPermissions())) {
                 if (command.getAliases().length > 0) {
                     embedBuilder.addField(COMMAND_PREFIX + command.getName() + " " + Arrays.toString(command.getAliases()), command.getDescription(), true);
                 } else {

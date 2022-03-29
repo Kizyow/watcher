@@ -8,8 +8,14 @@ import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class StreamUtils {
+
+    private static final Logger logger = Logger.getLogger(StreamUtils.class.getName());
+
+    StreamUtils(){}
 
     public static File tempFileFromImage(BufferedImage image, String prefix, String suffix) throws IOException {
         ByteArrayOutputStream os = new ByteArrayOutputStream();
@@ -61,11 +67,11 @@ public class StreamUtils {
             openConnection.connect();
 
             if (openConnection.getContentLength() > 8000000) {
-                System.out.println(" file size is too big.");
+                logger.log(Level.WARNING, " file size is too big.");
                 check = false;
             }
         } catch (Exception e) {
-            System.out.println("Couldn't create a connection to the link, please recheck the link.");
+            logger.log(Level.SEVERE, "Couldn't create a connection to the link, please recheck the link.");
             check = false;
             e.printStackTrace();
         }
@@ -85,7 +91,7 @@ public class StreamUtils {
                 byte[] response = out.toByteArray();
                 img = ImageIO.read(new ByteArrayInputStream(response));
             } catch (Exception e) {
-                System.out.println(" couldn't read an image from this link.");
+                logger.log(Level.SEVERE, " couldn't read an image from this link.");
                 e.printStackTrace();
             }
 
