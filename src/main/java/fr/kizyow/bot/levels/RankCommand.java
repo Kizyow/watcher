@@ -2,7 +2,9 @@ package fr.kizyow.bot.levels;
 
 import fr.kizyow.bot.commands.GuildCommand;
 import fr.kizyow.bot.database.tables.LevelTable;
+import fr.kizyow.bot.exceptions.ResourceNotFoundException;
 import fr.kizyow.bot.utils.FontUtils;
+import fr.kizyow.bot.utils.Optional;
 import fr.kizyow.bot.utils.StreamUtils;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.MessageEmbed;
@@ -104,12 +106,9 @@ public class RankCommand extends GuildCommand {
         // Get the user's avatar from Discord server (256x256) and buffer it to apply in our current image
         // If an user doesn't have an avatar, load a default avatar from our assets
         URL defaultAvatarURL = this.getClass().getClassLoader().getResource("assets/avatar.png");
-        BufferedImage bufferAvatar;
-        if (user.getAvatarUrl() != null) {
-            bufferAvatar = StreamUtils.createImageFromURL(user.getAvatarUrl() + "?size=256");
-        } else {
-            bufferAvatar = ImageIO.read(defaultAvatarURL);
-        }
+        BufferedImage bufferAvatar = user.getAvatarUrl() != null
+                ? StreamUtils.createImageFromURL(user.getAvatarUrl() + "?size=256")
+                : ImageIO.read(defaultAvatarURL);
 
         // Resize the avatar to 256x256 pixels
         bufferAvatar = StreamUtils.resizeImage(bufferAvatar, 180, 180);
