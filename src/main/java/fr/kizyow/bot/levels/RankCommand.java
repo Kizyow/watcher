@@ -65,13 +65,13 @@ public class RankCommand extends GuildCommand {
         graphics.fillRect(0, 0, 1000, 300);
 
         graphics.setColor(new Color(188, 192, 195));
-        graphics.setFont(FontUtils.ROBOTO.deriveFont(40f));
+        graphics.setFont(FontUtils.roboto.deriveFont(40f));
         String nameString = user.getName();
         int nameStringSize = graphics.getFontMetrics().stringWidth(nameString);
         graphics.drawString(nameString, 310, 160);
 
         graphics.setColor(new Color(150, 155, 161));
-        graphics.setFont(FontUtils.ROBOTO.deriveFont(30f));
+        graphics.setFont(FontUtils.roboto.deriveFont(30f));
         String tagString = "#" + user.getDiscriminator();
         graphics.drawString(tagString, 310 + nameStringSize, 160);
 
@@ -79,19 +79,19 @@ public class RankCommand extends GuildCommand {
         int xpReach = (int) (LevelManager.BASE_LEVEL_XP * 0.85 * levelTable.getLevel(user));
 
         graphics.setColor(new Color(150, 155, 161));
-        graphics.setFont(FontUtils.ROBOTO.deriveFont(20f));
+        graphics.setFont(FontUtils.roboto.deriveFont(20f));
         String expString = exp + " / " + xpReach;
         int expStringSize = graphics.getFontMetrics().stringWidth(expString);
         graphics.drawString(expString, 900 - expStringSize, 160);
 
         graphics.setColor(new Color(253, 158, 136));
-        graphics.setFont(FontUtils.ROBOTO.deriveFont(30f));
+        graphics.setFont(FontUtils.roboto.deriveFont(30f));
         String levelString = "Niveau " + levelTable.getLevel(user);
         int levelStringSize = graphics.getFontMetrics().stringWidth(levelString);
         graphics.drawString(levelString, 900 - levelStringSize, 250);
 
         graphics.setColor(new Color(241, 241, 241));
-        graphics.setFont(FontUtils.ROBOTO.deriveFont(30f));
+        graphics.setFont(FontUtils.roboto.deriveFont(30f));
         String placeString = "Place #" + levelTable.getPlace(user);
         graphics.drawString(placeString, 310, 250);
 
