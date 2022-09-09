@@ -29,10 +29,9 @@ public class Bot {
     public Bot(String token, BotConfig botConfig) {
         this.botConfig = botConfig;
         this.commandManager = new CommandManager();
-        this.jdaBuilder = JDABuilder.createDefault(token);
+        this.jdaBuilder = JDABuilder.createLight(token , GatewayIntent.GUILD_PRESENCES, GatewayIntent.GUILD_MEMBERS, GatewayIntent.GUILD_MESSAGES, GatewayIntent.DIRECT_MESSAGES);
 
         // Configuration of the bot to properly use/listen/cache everything
-        jdaBuilder.enableIntents(GatewayIntent.GUILD_PRESENCES, GatewayIntent.GUILD_MEMBERS, GatewayIntent.GUILD_MESSAGES, GatewayIntent.DIRECT_MESSAGES);
         jdaBuilder.setChunkingFilter(ChunkingFilter.ALL);
         jdaBuilder.setMemberCachePolicy(MemberCachePolicy.ALL);
         jdaBuilder.enableCache(CacheFlag.CLIENT_STATUS, CacheFlag.ACTIVITY);
@@ -40,12 +39,10 @@ public class Bot {
 
     public void registerListener() {
         logger.info("Registering listeners");
-
-        CommandListener commandListener = new CommandListener(this);
-        jdaBuilder.addEventListeners(commandListener);
-
-        GuildListener guildListener = new GuildListener();
-        jdaBuilder.addEventListeners(guildListener);
+        jdaBuilder.addEventListeners(
+                new CommandListener(this),
+                new GuildListener()
+            );
     }
 
     public void registerCommand() {
