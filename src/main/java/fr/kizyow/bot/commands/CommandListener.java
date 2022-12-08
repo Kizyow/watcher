@@ -6,10 +6,9 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.MessageEmbed;
-import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.User;
-import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
-import net.dv8tion.jda.api.events.message.priv.PrivateMessageReceivedEvent;
+import net.dv8tion.jda.api.entities.channel.middleman.MessageChannel;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
 
@@ -28,69 +27,70 @@ public class CommandListener extends ListenerAdapter {
     }
 
     @Override
-    public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event) {
+    public void onMessageReceived(@NotNull MessageReceivedEvent event) {
 
-        User user = event.getAuthor();
-        String message = event.getMessage().getContentRaw();
-        TextChannel channel = event.getChannel();
+        if(event.isFromGuild()) {
 
-        if (user.isBot()) return;
-        if (!message.startsWith(COMMAND_PREFIX)) {
-            LevelManager.update(user, event.getMessage());
-            return;
-        }
+            User user = event.getAuthor();
+            String message = event.getMessage().getContentRaw();
+            MessageChannel channel = event.getChannel();
 
-        String[] messageCommandArgs = message.substring(COMMAND_PREFIX.length()).split(" ");
-        String commandName = messageCommandArgs[0];
-        Optional<Command> optionalCommand = commandManager.getGuildCommand(commandName);
-
-        optionalCommand.ifPresent(command -> {
-
-            GuildCommand guildCommand = (GuildCommand) command;
-            Member member = event.getMember();
-            String[] args = Arrays.copyOfRange(messageCommandArgs, 1, messageCommandArgs.length);
-
-            if (command.getPermissions() == null || Arrays.equals(guildCommand.getPermissions(), Permission.EMPTY_PERMISSIONS)) {
-                guildCommand.execute(event, args);
+            if (user.isBot()) return;
+            if (!message.startsWith(COMMAND_PREFIX)) {
+                LevelManager.update(user, event.getMessage());
                 return;
             }
 
-            if (member.hasPermission(guildCommand.getPermissions())) {
-                guildCommand.execute(event, args);
+            String[] messageCommandArgs = message.substring(COMMAND_PREFIX.length()).split(" ");
+            String commandName = messageCommandArgs[0];
+            Optional<Command> optionalCommand = commandManager.getGuildCommand(commandName);
 
-            } else {
+            optionalCommand.ifPresent(command -> {
 
-                MessageEmbed embed = new EmbedBuilder()
-                        .setDescription("Vous n'avez pas les permissions nécessaires pour exécuter cette commande.")
-                        .setColor(Color.pink)
-                        .build();
+                GuildCommand guildCommand = (GuildCommand) command;
+                Member member = event.getMember();
+                String[] args = Arrays.copyOfRange(messageCommandArgs, 1, messageCommandArgs.length);
 
-                channel.sendMessageEmbeds(embed).queue();
-            }
+                if (command.getPermissions() == null || Arrays.equals(guildCommand.getPermissions(), Permission.EMPTY_PERMISSIONS)) {
+                    guildCommand.execute(event, args);
+                    return;
+                }
 
-        });
+                if (member.hasPermission(guildCommand.getPermissions())) {
+                    guildCommand.execute(event, args);
 
-    }
+                } else {
 
-    @Override
-    public void onPrivateMessageReceived(@NotNull PrivateMessageReceivedEvent event) {
+                    MessageEmbed embed = new EmbedBuilder()
+                            .setDescription("Vous n'avez pas les permissions nécessaires pour exécuter cette commande.")
+                            .setColor(Color.pink)
+                            .build();
 
-        User user = event.getAuthor();
-        String message = event.getMessage().getContentRaw();
+                    channel.sendMessageEmbeds(embed).queue();
+                }
 
-        if (user.isBot()) return;
-        if (!message.startsWith(COMMAND_PREFIX)) return;
+            });
 
-        String[] messageCommand = message.substring(COMMAND_PREFIX.length()).split(" ");
-        String messageCommandArgs = messageCommand[0];
-        Optional<Command> optionalCommand = commandManager.getPrivateCommand(messageCommandArgs);
+        } else {
 
-        optionalCommand.ifPresent(command -> {
-            PrivateCommand privateCommand = (PrivateCommand) command;
-            String[] args = Arrays.copyOfRange(messageCommand, 1, messageCommand.length);
+            User user = event.getAuthor();
+            String message = event.getMessage().getContentRaw();
 
-            privateCommand.execute(event, args);
-        });
+            if (user.isBot()) return;
+            if (!message.startsWith(COMMAND_PREFIX)) return;
+
+            String[] messageCommand = message.substring(COMMAND_PREFIX.length()).split(" ");
+            String messageCommandArgs = messageCommand[0];
+            Optional<Command> optionalCommand = commandManager.getPrivateCommand(messageCommandArgs);
+
+            optionalCommand.ifPresent(command -> {
+                PrivateCommand privateCommand = (PrivateCommand) command;
+                String[] args = Arrays.copyOfRange(messageCommand, 1, messageCommand.length);
+
+                privateCommand.execute(event, args);
+            });
+
+        }
 
     }
 

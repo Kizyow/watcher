@@ -1,6 +1,6 @@
 package fr.kizyow.bot.commands;
 
-import net.dv8tion.jda.api.entities.ChannelType;
+import net.dv8tion.jda.api.entities.channel.ChannelType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

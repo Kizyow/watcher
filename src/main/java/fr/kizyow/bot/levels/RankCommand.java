@@ -7,7 +7,8 @@ import fr.kizyow.bot.utils.StreamUtils;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.User;
-import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.api.utils.FileUpload;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -24,7 +25,7 @@ public class RankCommand extends GuildCommand {
     }
 
     @Override
-    public void execute(GuildMessageReceivedEvent event, String[] args) {
+    public void execute(MessageReceivedEvent event, String[] args) {
 
         LevelTable levelTable = new LevelTable(event.getGuild().getId());
         User user = event.getAuthor();
@@ -37,7 +38,8 @@ public class RankCommand extends GuildCommand {
                     .build();
 
             File file = createRankCard(user, levelTable);
-            event.getChannel().sendFile(file, "rank-card.png").setEmbeds(embed).queue();
+            FileUpload fileUpload = FileUpload.fromData(file, "rank-card.png");
+            event.getChannel().sendFiles(fileUpload).setEmbeds(embed).queue();
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -15,8 +15,6 @@ import net.dv8tion.jda.api.utils.cache.CacheFlag;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.security.auth.login.LoginException;
-
 public class Bot {
 
     private final BotConfig botConfig;
@@ -29,7 +27,7 @@ public class Bot {
     public Bot(String token, BotConfig botConfig) {
         this.botConfig = botConfig;
         this.commandManager = new CommandManager();
-        this.jdaBuilder = JDABuilder.createLight(token , GatewayIntent.GUILD_PRESENCES, GatewayIntent.GUILD_MEMBERS, GatewayIntent.GUILD_MESSAGES, GatewayIntent.DIRECT_MESSAGES);
+        this.jdaBuilder = JDABuilder.createLight(token , GatewayIntent.GUILD_PRESENCES, GatewayIntent.GUILD_MEMBERS, GatewayIntent.GUILD_MESSAGES, GatewayIntent.DIRECT_MESSAGES, GatewayIntent.MESSAGE_CONTENT);
 
         // Configuration of the bot to properly use/listen/cache everything
         jdaBuilder.setChunkingFilter(ChunkingFilter.ALL);
@@ -73,7 +71,7 @@ public class Bot {
         try {
             jda = jdaBuilder.build().awaitReady();
             this.postBuild();
-        } catch (LoginException | InterruptedException e) {
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
 

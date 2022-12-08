@@ -1,16 +1,13 @@
 package fr.kizyow.bot.commands.commons;
 
-import fr.kizyow.bot.commands.CommandHelper;
-import fr.kizyow.bot.commands.CommandsArgsHelper;
 import fr.kizyow.bot.commands.GuildCommand;
 import fr.kizyow.bot.database.tables.AdminTable;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.MessageEmbed;
-import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.User;
-import net.dv8tion.jda.api.events.message.guild.GenericGuildMessageEvent;
-import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import net.dv8tion.jda.api.entities.channel.middleman.MessageChannel;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 import java.awt.*;
 
@@ -24,10 +21,10 @@ public class DepromoteCommand extends GuildCommand {
     }
 
     @Override
-    public void execute(GuildMessageReceivedEvent event, String[] args) {
+    public void execute(MessageReceivedEvent event, String[] args) {
 
         User user = event.getAuthor();
-        TextChannel channel = event.getChannel();
+        MessageChannel channel = event.getChannel();
         Guild guild = event.getGuild();
 
         if (!user.getId().equalsIgnoreCase("310000732034301953")) {

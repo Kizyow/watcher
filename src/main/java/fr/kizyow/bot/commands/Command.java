@@ -1,7 +1,8 @@
 package fr.kizyow.bot.commands;
 
 import net.dv8tion.jda.api.Permission;
-import net.dv8tion.jda.api.entities.ChannelType;
+import net.dv8tion.jda.api.entities.channel.ChannelType;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 public abstract class Command {
 
@@ -50,5 +51,7 @@ public abstract class Command {
     public Permission[] getPermissions() {
         return permissions;
     }
+
+    public abstract void execute(MessageReceivedEvent event, String[] args);
 
 }

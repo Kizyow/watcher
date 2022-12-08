@@ -10,7 +10,7 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.User;
-import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -26,7 +26,7 @@ public class ReloadCommand extends GuildCommand {
     }
 
     @Override
-    public void execute(GuildMessageReceivedEvent event, String[] args) {
+    public void execute(MessageReceivedEvent event, String[] args) {
 
         User user = event.getAuthor();
         AdminTable adminTable = new AdminTable();

@@ -1,8 +1,7 @@
 package fr.kizyow.bot.commands;
 
 import net.dv8tion.jda.api.Permission;
-import net.dv8tion.jda.api.entities.ChannelType;
-import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import net.dv8tion.jda.api.entities.channel.ChannelType;
 
 public abstract class GuildCommand extends Command {
 
@@ -21,7 +20,5 @@ public abstract class GuildCommand extends Command {
     public GuildCommand(String name, String description) {
         this(name, new String[0], description, Permission.EMPTY_PERMISSIONS);
     }
-
-    public abstract void execute(GuildMessageReceivedEvent event, String[] args);
 
 }

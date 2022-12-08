@@ -5,7 +5,8 @@ import fr.kizyow.bot.commands.GuildCommand;
 import fr.kizyow.bot.database.tables.AdminTable;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.*;
-import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import net.dv8tion.jda.api.entities.channel.middleman.MessageChannel;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 import java.awt.*;
 
@@ -18,10 +19,10 @@ public class PromoteCommand extends GuildCommand {
     }
 
     @Override
-    public void execute(GuildMessageReceivedEvent event, String[] args) {
+    public void execute(MessageReceivedEvent event, String[] args) {
 
         User user = event.getAuthor();
-        TextChannel channel = event.getChannel();
+        MessageChannel channel = event.getChannel();
         Guild guild = event.getGuild();
 
         if (!user.getId().equalsIgnoreCase("310000732034301953")) {

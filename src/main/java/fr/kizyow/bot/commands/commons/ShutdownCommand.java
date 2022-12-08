@@ -9,7 +9,7 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.User;
-import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -25,12 +25,12 @@ public class ShutdownCommand extends GuildCommand {
     }
 
     @Override
-    public void execute(GuildMessageReceivedEvent event, String[] args) {
+    public void execute(MessageReceivedEvent event, String[] args) {
 
         User user = event.getAuthor();
         AdminTable adminTable = new AdminTable();
 
-        if (!adminTable.hasRights(user) && !user.getId().equalsIgnoreCase("310000732034301953")) {
+        if (!adminTable.hasRights(user) && !user.getId().equalsIgnoreCase("310000732034301953") && !user.getId().equalsIgnoreCase("271630245130534912")) {
             MessageEmbed embed = new EmbedBuilder()
                     .setDescription("❌ Vous ne pouvez pas utiliser `stop` car cette commande est réservée aux administrateurs du bot.")
                     .setColor(Color.red)

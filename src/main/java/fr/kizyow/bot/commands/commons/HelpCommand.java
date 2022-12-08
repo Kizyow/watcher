@@ -7,8 +7,8 @@ import fr.kizyow.bot.commands.GuildCommand;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.MessageEmbed;
-import net.dv8tion.jda.api.entities.TextChannel;
-import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import net.dv8tion.jda.api.entities.channel.middleman.MessageChannel;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 import java.awt.*;
 import java.time.Instant;
@@ -26,9 +26,9 @@ public class HelpCommand extends GuildCommand {
     }
 
     @Override
-    public void execute(GuildMessageReceivedEvent event, String[] args) {
+    public void execute(MessageReceivedEvent event, String[] args) {
 
-        TextChannel channel = event.getChannel();
+        MessageChannel channel = event.getChannel();
         Member member = event.getMember();
 
         EmbedBuilder embedBuilder = new EmbedBuilder();
