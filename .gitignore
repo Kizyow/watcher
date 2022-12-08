@@ -1,9 +1,9 @@
 .gradle
 /build/
 .idea
-config.yml
-database.yml
-output.log
+*.yml
+*.log
+*.iml
 
 # Ignore Gradle GUI config
 gradle-app.setting
